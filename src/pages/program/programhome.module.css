@@ -1,0 +1,14 @@
+.programWrap{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.programSidebarWrap{
+    background-color: rgb(255, 255, 255);
+}
+
+.programContentWrap{
+    background-color: rgb(139, 139, 198);
+    flex-grow: 1;
+}
