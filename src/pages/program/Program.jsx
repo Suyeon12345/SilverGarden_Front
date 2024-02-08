@@ -7,24 +7,21 @@ import { faComment, faCrosshairs, faSolarPanel } from '@fortawesome/free-solid-s
 const Program = () => {
     const list = [//이 리스트를 props를 넣어주면 원하는 목록의 사이드바를 생성 가능
     {
-    label: '결재',//목록이름
+    label: '프로그램 관리',//목록이름
     icon: faSolarPanel,//fontAwsome 아이콘 명
     isOpen:true,
     subMenuItems: [//서브목록 정보
-        { label: '결재대기함', icon: faCrosshairs},//서브목록이름, 아이콘명, 클릭시넘어갈 url
-        { label: '결재진행함', icon: faComment},
-        { label: '반려문서함', icon: faComment},
-        { label: '결재완료문서', icon: faComment},
+        { label: '현황', icon: faCrosshairs},//서브목록이름, 아이콘명, 클릭시넘어갈 url
+        { label: '프로그램 정보', icon: faComment},
+        { label: '일정', icon: faComment},
     ],
     },
     {
-    label: '기안',
+    label: '프로그램 기록',
     icon: faSolarPanel,
     isOpen:true,
     subMenuItems: [
-        { label: '결재문서작성', icon: faComment },
-        { label: '임시보관함', icon: faComment },
-        { label: '결재요청함', icon: faComment },
+        { label: '기록물 관리', icon: faComment },
     ],
     },
     ];
