@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../css/angel.module.css';
+import styles from '../program/programhome.module.css';
 
 const ProgramList = ({ programList, onRowClick, programDetail }) => {
     // console.log('programList:', programList);
@@ -125,7 +125,7 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                             </tr>
                         ))
                         //프로그램이 없을 때의 처리 필요
-                            : <tr><td colSpan="7">프로그램이 없습니다.</td></tr>
+                            : <tr><td colSpan="8">프로그램이 없습니다.</td></tr>
                     }
                     </tbody>
                 </table>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './programhome.module.css'
 import SidebarCommon from '../../components/sidebar/SidebarCommon';
-import {faCalendar, faComment, faCrosshairs, faMapMarker, faSolarPanel, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
+import {faCalendar, faComment, faCrosshairs, faMapMarker, faSolarPanel } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProgramList from './ProgramList';
 
