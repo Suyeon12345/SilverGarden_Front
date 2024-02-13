@@ -1,15 +1,18 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
 .programWrap{
     height: 100%;
     display: grid;
     grid-template-areas: 
-    "programSidebarWrap programTitleBar programTitleBar"
-    "programSidebarWrap programContentWrap programDetailWrap"
-    "programSidebarWrap programContentWrap programDetailWrap";
-    background-color: rgb(139, 139, 198);
-    grid-template-columns: 1fr 3fr 3fr;
-    grid-template-rows: 70px 1fr 1fr;
-    background-color: rgb(237, 114, 225);
-
+    "programSidebarWrap programTitleBar"
+    "programSidebarWrap innerContentLayout"
+    "programSidebarWrap innerContentLayout";
+    /* background-color: rgb(139, 238, 139); */
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 70px 1fr;
 }
 
 .programTitleBar{
@@ -21,16 +24,41 @@
 .programSidebarWrap{
     display : flex;
     grid-area: programSidebarWrap;
-    background-color: rgb(141, 118, 118);
+    /* background-color: rgb(21, 0, 253); */
+}
+
+.innerContentLayout{
+    grid-area: innerContentLayout;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+}
+
+.programInfoWrap{
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+    "programContentWrap programDetailWrap"
+    "programContentWrap programDetailWrap"
+    "programContentWrap programDetailWrap";
+    /* background-color: rgb(255, 0, 208); */
+    grid-template-columns: 3fr 3fr;
+    grid-template-rows: 1fr 1fr;
 }
 
 .programContentWrap{
     grid-area: programContentWrap;
-    background-color: rgb(142, 143, 129);
-
+    /* background-color: rgb(117, 120, 74); */
+    overflow: auto; /* 내용이 넘칠 경우 스크롤바를 추가 */
+    border: 3px solid black;
+    padding: 10px;
 }
 .programDetailWrap{
     grid-area: programDetailWrap;
-    background-color: rgb(163, 194, 192);
-
+    /* background-color: rgb(163, 194, 192); */
+    overflow: auto; /* 내용이 넘칠 경우 스크롤바를 추가 */
+}
+.littleTitleBar{
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bolder;
 }

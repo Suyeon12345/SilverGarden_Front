@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../program/programhome.module.css';
+import ExcelForm from './ExceltDown';
+import { useDispatch } from 'react-redux';
+import { setDetail } from '../../redux/programSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 
-const ProgramList = ({ programList, onRowClick, programDetail }) => {
-    // console.log('programList:', programList);
+const ProgramList = ({ programList, onRowClick, getProgramList  }) => {
+    const dispatch = useDispatch();
     const [searchedPrograms, setSearchedPrograms] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState(''); // 추가: 검색어 상태
-
+    //입력창에 기본커서 두기
     useEffect(() => {
         document.getElementById('keyword').focus();
     }, []);
 
-    const formatDate = (date) => {
-        return new Date(date).toLocaleDateString();
-    };
-
-    const today = formatDate(new Date());
+    const today = new Date();
     const getGubun = (start, end) => {
-        const formattedStart = formatDate(start);
-        const formattedEnd = formatDate(end);
-
-        if (formattedEnd < today) {
+        const startDate = new Date(start); // 오라클에서 받은 Date를 JavaScript Date 객체로 변환
+        const endDate = new Date(end); // 오라클에서 받은 Date를 JavaScript Date 객체로 변환
+    
+        if (endDate < today) {
             return '종료';
-        } else if (formattedStart > today) {
+        } else if (startDate > today) {
             return '예정';
         } else {
             return '진행';
@@ -40,21 +41,43 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
     };
     // 전체조회 & 초기화 설정
     const handleShowAll = () => {
+        console.log('handleShowAll');
         setSearchedPrograms([]); // 검색 결과 초기화
         setSearchKeyword(''); // 추가: 검색어 초기화
+        dispatch(setDetail(null));
+        getProgramList();//초기화
+        document.getElementById('gubun').value = '구분';
     }
-
 
     return (
         <div>
+            <div className="d-flex justify-content-end">
+                <button
+                    className="btn btn-outline-warning"
+                    style={{minWidth: '15%', marginRight: '0.5rem'}}
+                    onClick={()=>{
+                    onRowClick(null); // 클릭 이벤트 발생
+                    handleShowAll();
+                    setSearchKeyword(''); // 검색어 초기화
+                    }}
+                >
+                전체조회
+                </button>
+                <ExcelForm/>
+            </div>
+            <div className={styles.littleTitleBar}>
+                <FontAwesomeIcon icon={faList} className={styles.icon} style={{ marginRight: '5px' }} />
+                프로그램 목록
+            </div>
             <div className={styles.scrollableContent}>
                 <div className={styles.box2}>
                     <div className="d-flex">
                         <select
                             id="gubun"
-                            className="form-select me-1"
-                            style={{width: '25%', marginRight: '0.5rem'}}
+                            className="form-select" aria-label="Default select example"
+                            style={{width: '30%', marginRight: '0.5rem', fontSize:'14px'}}
                         >
+                            <option defaultValue>구분</option>
                             <option value="PG_NAME">프로그램명</option>
                             <option value="PG_CATEGORY">분류</option>
                             <option value="PG_TEACHER">강사</option>
@@ -64,26 +87,25 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                             id = "keyword"
                             type="text"
                             className="form-control me-2"
-                            style={{width: '60%'}}
+                            style={{width: '60%', fontSize:'14px'}}
                             placeholder="검색내용을 입력하세요"
                             onChange={(e) => setSearchKeyword(e.target.value)}
                             value={searchKeyword}
                         />
                         <button
                             className="btn btn-outline-info"
-                            style={{minWidth: '15%', marginRight: '0.5rem'}}
+                            style={{minWidth: '10%'}}
                             onClick={handleSearch}
                         >
                             검색
                         </button>
                     </div>
-                    <div></div>
                 </div>
             </div>
             <div className="table-responsive">
-                <table className="table table-bordered">
+                <table className="table table-hover">
                     <thead className="fs-6">
-                    <tr  style={{fontSize:15}}>
+                    <tr style={{fontSize:12}}>
                         <th>연번</th>
                         <th>프로그램명</th>
                         <th>분류</th>
@@ -94,8 +116,7 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                         <th>구분</th>
                     </tr>
                     </thead>
-                    <tbody className="fs-6">
-                    {/* //검색된 목록이 있어? 검색리스트로 불러오기 */}
+                    <tbody className="fs-6"  style={{fontSize:12}}>
                     {searchedPrograms.length > 0
                         ? searchedPrograms.map((program, index) => (
                             <tr key={program.PG_NO} onClick={() => onRowClick(program)}>
@@ -104,8 +125,8 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                                 <td>{program.PG_CATEGORY}</td>
                                 <td>{program.PG_TEACHER}</td>
                                 <td>{program.PG_DAYSOFWEEK}</td>
-                                <td>{new Date(program.PG_START).toLocaleDateString()}</td>
-                                <td>{new Date(program.PG_END).toLocaleDateString()}</td>
+                                <td>{new Date(program.PG_START).toLocaleString()}</td>
+                                <td>{new Date(program.PG_END).toLocaleString()}</td>
                                 <td>{getGubun(program.PG_START, program.PG_END)}</td>
                             </tr>
                         ))
@@ -113,7 +134,7 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                         //index 넣어서 pg_no(개발자가 보고 사용하는 번호)가 아니라 연번 식으로 붙여서 표현
                         : programList && programList.length > 0
                             ? programList.map((program, index) => (
-                            <tr key={program.PG_NO} onClick={() => onRowClick(program)}>
+                            <tr key={program.PG_NO} onClick={() => onRowClick(program)} style={{fontSize:12}}>
                                 <td>{index + 1}</td>
                                 <td>{program.PG_NAME}</td>
                                 <td>{program.PG_CATEGORY}</td>
@@ -125,22 +146,10 @@ const ProgramList = ({ programList, onRowClick, programDetail }) => {
                             </tr>
                         ))
                         //프로그램이 없을 때의 처리 필요
-                            : <tr><td colSpan="8">프로그램이 없습니다.</td></tr>
+                        : <tr><td colSpan="8" style={{ textAlign: 'center' }}>등록된 프로그램이 없습니다.</td></tr>
                     }
                     </tbody>
                 </table>
-                <button
-                    className="btn btn-outline-success"
-                    style={{minWidth: '15%', marginRight: '0.5rem'}}
-                    onClick={()=>{
-                        if(programDetail !== null){
-                            onRowClick(null); // 클릭 이벤트 발생
-                            handleShowAll();
-                        }
-                    }}
-                >
-                    전체조회
-                </button>
             </div>
         </div>
     );
