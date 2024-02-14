@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './programhome.module.css'
 import SidebarCommon from '../../components/sidebar/SidebarCommon';
-import {faBook, faCalendar, faChartPie, faComment, faCrosshairs, faFile, faServer, faSolarPanel } from '@fortawesome/free-solid-svg-icons';
+import {faBook, faCalendar, faChartPie, faFile, faServer } from '@fortawesome/free-solid-svg-icons';
 import { programListDB } from '../../services/api/programApi';
 import { useDispatch } from 'react-redux';
 import ProgramDashboard from '../programdashboard/ProgramDashboard';
@@ -36,7 +36,7 @@ const Program = () => {
     const handleMenu = (menuTitle) =>{
         setPage(menuTitle);
     }
-    const [page, setPage] = useState("프로그램 정보");//기본 페이지
+    const [page, setPage] = useState("일정");//기본 페이지
     const [programList, setProgramList] = useState([]);
     const [programDetail, setProgramDetail] = useState(null);
     //전체조회해 온 값을 저장해두고, 나중에 디테일g 조회할 때 사용해보자
@@ -45,6 +45,7 @@ const Program = () => {
     const getProgramList = async () => { 
         const response = await programListDB();
         const data = response.data;
+        console.log(data);
         setProgramList(data);
     };
     //기존에는 DbLogic에서 한번 더 해당 로우의 번호에 따라서 값을 조회해 왔다면
@@ -53,6 +54,7 @@ const Program = () => {
     const onRowClick = async (program) => {
         if (program) {
             dispatch(setDetail(program));
+            console.log(program);
             const detail = programList.find(item => item.PG_NO === program.PG_NO);
             setProgramDetail(detail);
         } else {
@@ -75,7 +77,11 @@ const Program = () => {
             <div className={styles.programSidebarWrap}><SidebarCommon list={list} handleMenu={handleMenu}/></div>
             <div className={styles.programTitleBar}> {page}</div>
             <div className={styles.innerContentLayout}>
-                {page === "현황" && <ProgramDashboard />}
+                {page === "현황" && 
+                    <ProgramDashboard 
+                        programList={programList}
+                        getProgramList={getProgramList}
+                    />}
                 {page === "프로그램 정보" && 
                     <ProgramInfo
                         programList={programList}

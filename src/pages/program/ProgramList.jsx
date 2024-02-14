@@ -87,7 +87,6 @@ const ProgramList = ({ programList, onRowClick, getProgramList  }) => {
                             id = "keyword"
                             type="text"
                             className="form-control me-2"
-                            style={{width: '60%', fontSize:'14px'}}
                             placeholder="검색내용을 입력하세요"
                             onChange={(e) => setSearchKeyword(e.target.value)}
                             value={searchKeyword}
@@ -105,7 +104,7 @@ const ProgramList = ({ programList, onRowClick, getProgramList  }) => {
             <div className="table-responsive">
                 <table className="table table-hover">
                     <thead className="fs-6">
-                    <tr style={{fontSize:12}}>
+                    <tr>
                         <th>연번</th>
                         <th>프로그램명</th>
                         <th>분류</th>
@@ -116,7 +115,7 @@ const ProgramList = ({ programList, onRowClick, getProgramList  }) => {
                         <th>구분</th>
                     </tr>
                     </thead>
-                    <tbody className="fs-6"  style={{fontSize:12}}>
+                    <tbody className="fs-6">
                     {searchedPrograms.length > 0
                         ? searchedPrograms.map((program, index) => (
                             <tr key={program.PG_NO} onClick={() => onRowClick(program)}>
@@ -134,7 +133,7 @@ const ProgramList = ({ programList, onRowClick, getProgramList  }) => {
                         //index 넣어서 pg_no(개발자가 보고 사용하는 번호)가 아니라 연번 식으로 붙여서 표현
                         : programList && programList.length > 0
                             ? programList.map((program, index) => (
-                            <tr key={program.PG_NO} onClick={() => onRowClick(program)} style={{fontSize:12}}>
+                            <tr key={program.PG_NO} onClick={() => onRowClick(program)}>
                                 <td>{index + 1}</td>
                                 <td>{program.PG_NAME}</td>
                                 <td>{program.PG_CATEGORY}</td>

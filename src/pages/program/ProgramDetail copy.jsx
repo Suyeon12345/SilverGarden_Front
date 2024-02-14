@@ -28,8 +28,8 @@ const buttonStyles = {
 const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset }) => {
     const dispatch = useDispatch();
     const pNO = useSelector((state) => state.programSlice.value);
+
     const handleDelete = async () => {
-        console.log(pNO);
         console.log('삭제 버튼이 클릭되었습니다.');
         try {
             // 서버에서 삭제 요청을 보냅니다.
@@ -51,18 +51,27 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
         }));
     };
 
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
     const onSubmit = async () => {
         console.log('수정 버튼이 클릭되었습니다.');
         const data = {
-            PG_NO: pNO.PG_NO,
-            PG_NAME: pNO.PG_NAME,
-            PG_CATEGORY: pNO.PG_CATEGORY,
-            PG_TEACHER: pNO.PG_TEACHER,
-            PG_DAYSOFWEEK: pNO.PG_DAYSOFWEEK,
-            PG_START: pNO.PG_START,
-            PG_END: pNO.PG_END,
-            PG_CONTENT: pNO.PG_CONTENT,
-            PG_REPEAT_TYPE: pNO.PG_REPEAT_TYPE
+        pg_no: pNO.PG_NO,
+        pg_name: pNO.PG_NAME,
+        pg_category: pNO.PG_CATEGORY,
+        pg_teacher: pNO.PG_TEACHER,
+        pg_daysofweek: pNO.PG_DAYSOFWEEK,
+        pg_start: pNO.PG_START ? formatDate(new Date(pNO.PG_START)) : null,
+        pg_end: pNO.PG_END ? formatDate(new Date(pNO.PG_END)) : null,
+        pg_content: pNO.PG_CONTENT,
+        pg_repeat_type: pNO.PG_REPEAT_TYPE
         };
         const res = await ProgramUpdateDB(data);
         console.log(res);
@@ -133,7 +142,7 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
                     <td style={{ width: '30%' }}>
                         <FormControl
                         type="datetime-local"
-                        value={pNO.PG_START}
+                        value={pNO.PG_START ? formatDate(new Date(pNO.PG_START)) : ''}
                         name="PG_START"
                         onChange={(e) => handleInputChange(e, 'PG_START')}
                         />
@@ -142,7 +151,7 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
                     <td style={{ width: '30%' }}>
                         <FormControl
                         type="datetime-local"
-                        value={pNO.PG_END}
+                        value={pNO.PG_END ? formatDate(new Date(pNO.PG_END)) : ''}
                         name="PG_END"
                         onChange={(e) => handleInputChange(e, 'PG_END')}
                         />

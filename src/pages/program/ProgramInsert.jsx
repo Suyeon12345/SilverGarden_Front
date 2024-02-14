@@ -16,27 +16,11 @@ function ProgramInsert({ componentRef, handleReset, getProgramList }) {
         PG_CONTENT: '',
     });
 
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${year}-${month}-${day}T${hours}:${minutes}`;
-    };
-
     const handleInsert = async () => {
         console.log('등록 버튼이 클릭되었습니다.');
         try {
-        // ISO 문자열로 변환하기 전에 형식을 맞추기
-        const formattedData = {
-        ...newData,
-        PG_START: formatDate(new Date(newData.PG_START)),
-        PG_END: formatDate(new Date(newData.PG_END)),
-        };
-        // console.log(formattedData);
-        const response = await programInsertDB(formattedData);
-        // console.log(response);
+        const response = await programInsertDB(newData);
+        console.log(response);
         // 등록 성공 시 상태 초기화
         setNewData({
             PG_NAME: '',
@@ -84,14 +68,14 @@ function ProgramInsert({ componentRef, handleReset, getProgramList }) {
             <table className="table table-bordered">
             <tbody className="fs-6">
                 <tr>
-                    <th style={{ width: '25%' }}>프로그램명</th>
-                    <td style={{ width: '25%' }} colSpan="3">
-                        <input type="text" name="PG_NAME" value={newData.PG_NAME} onChange={handleInputChange} />
+                    <th>프로그램명</th>
+                    <td  colSpan="3">
+                        <input type="text" name="PG_NAME" value={newData.PG_NAME} onChange={handleInputChange}/>
                     </td>
                 </tr>
                 <tr>
-                    <th style={{ width: '25%' }}>분류</th>
-                    <td style={{ width: '25%' }}>
+                    <th>분류</th>
+                    <td>
                         <select name="PG_CATEGORY" value={newData.PG_CATEGORY} onChange={handleInputChange}>
                         <option value="null">선택</option>
                         {categoryOptions.map((category, index) => (
@@ -101,8 +85,8 @@ function ProgramInsert({ componentRef, handleReset, getProgramList }) {
                         ))}
                         </select>
                     </td>
-                    <th style={{ width: '25%' }}>주기</th>
-                    <td style={{ width: '25%' }}>
+                    <th >주기</th>
+                    <td >
                         <select name="PG_REPEAT_TYPE" value={newData.PG_REPEAT_TYPE} onChange={handleInputChange}>
                         <option value="null">선택</option>
                         {periodOptions.map((period, index) => (
@@ -114,22 +98,22 @@ function ProgramInsert({ componentRef, handleReset, getProgramList }) {
                     </td>
                 </tr>
                 <tr>
-                    <th style={{ width: '30%' }}>강사</th>
-                    <td style={{ width: '30%' }}>
+                    <th>강사</th>
+                    <td>
                         <input type="text" name="PG_TEACHER" value={newData.PG_TEACHER} onChange={handleInputChange} />
                     </td>
-                    <th style={{ width: '30%' }}>요일</th>
-                    <td style={{ width: '30%' }}>
+                    <th>요일</th>
+                    <td>
                         <input type="text" name="PG_DAYSOFWEEK" value={newData.PG_DAYSOFWEEK} onChange={handleInputChange} />
                     </td>
                 </tr>
                 <tr>
-                    <th style={{ width: '30%' }}>시작일시</th>
-                    <td style={{ width: '30%' }}>
+                    <th>시작일시</th>
+                    <td>
                         <input type="datetime-local" name="PG_START" value={newData.PG_START} onChange={handleInputChange} />
                     </td>
-                    <th style={{ width: '30%' }}>종료일시</th>
-                    <td style={{ width: '30%' }}>
+                    <th>종료일시</th>
+                    <td>
                         <input type="datetime-local" name="PG_END" value={newData.PG_END} onChange={handleInputChange} />
                     </td>
                 </tr>
@@ -139,7 +123,6 @@ function ProgramInsert({ componentRef, handleReset, getProgramList }) {
                 <tr>
                     <td colSpan="6">
                         <textarea
-                            style={{ width: '100%', height: '100px' }} // 원하는 높이로 조절 가능
                             name="PG_CONTENT"
                             value={newData.PG_CONTENT}
                             onChange={handleInputChange}
