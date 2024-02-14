@@ -30,7 +30,7 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
     const pNO = useSelector((state) => state.programSlice.value);
     const handleDelete = async () => {
         console.log(pNO);
-        console.log('삭제 버튼이 클릭되었습니다.');
+        console.log('삭제 버튼이 클릭되었습니다.!');
         try {
             // 서버에서 삭제 요청을 보냅니다.
             const res = await ProgramDeleteDB(pNO);
