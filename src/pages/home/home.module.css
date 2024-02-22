@@ -1,23 +1,22 @@
 .homeWrap{
   height: 100%;
-  width: 100%;
   display: grid;
   grid-template-areas: 
-  "profileWrap firstContentWrap secondContentWrap"
-  "sidebarWrap thirdContentWrap forthContentWrap";
-  grid-template-columns: 1fr 4fr 4fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: rgb(241, 241, 241);
-  border: 1px solid gray;
+  "profileWrap homeInnerContentWrap"
+  "sidebarWrap homeInnerContentWrap"
+  ;
+  grid-template-columns: 1fr 8fr;
+  grid-template-rows: 330px 1fr;
 
 }
+
 .profileWrap{
   display: flex;
   flex-direction: column;
   justify-content: baseline;
   align-items:center;
-  grid-area: profileWrap;
   background-color: rgb(129, 175, 216);
+  grid-area: profileWrap;
 }
 .profileWrap img{
   height: 200px;
@@ -27,54 +26,12 @@
 }
 
 .sidebarWrap{
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(255, 255, 255);
   grid-area: sidebarWrap;
   border-right: 1px solid lightgray;
   
 }
 
-.firstContentWrap{
-  padding: 20px;
-  margin: 10px;
-  background-color:white;
-  border-radius: 40px;
-  grid-area: firstContentWrap;
-  display: flex;
-  flex-direction: row;
-}
-.secondContentWrap{
-  padding: 20px;
-  margin: 10px;
-  background-color:white;
-  border-radius: 40px;
-  grid-area: secondContentWrap;
-}
-.thirdContentWrap{
-  padding: 20px;
-  margin: 10px;
-  background-color:white;
-  border-radius: 40px;
-  grid-area: thirdContentWrap;
-}
-.forthContentWrap{
-  padding: 20px;
-  margin: 10px;
-  background-color:white;
-  border-radius: 40px;
-  grid-area: forthContentWrap;
-  display: flex;
-  flex-direction: row;
-  height: 94%;
-}
-.subContentWrap {
-  flex-basis: 50%;
-}
-
-.subContentWrap2 {
-  flex-basis: 50%;
-  
-}
-.titleWrap {
-  display: block;
-  font-size: 1.1rem;
+.homeInnerContentWrap{
+  grid-area: homeInnerContentWrap;
 }

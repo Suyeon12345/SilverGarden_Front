@@ -32,20 +32,17 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
     const pNO = useSelector((state) => state.programSlice.value);
     //삭제하기
     const handleDelete = async () => {
+        console.log(pNO);
         console.log('삭제 버튼이 클릭되었습니다.!');
-        const confirmDelete = window.confirm("삭제하시겠습니까?");
-        if(confirmDelete){
-            try {
-                const res = await ProgramDeleteDB(pNO);
-                console.log(res);
-                getProgramList(); // 초기화 진행
-                handleReset(); // 등록화면 이동
-            } catch (error) {
-                console.error('삭제 에러:', error);
-            }
-        };
-        getProgramList(); // 초기화 진행
-    }
+        try {
+            const res = await ProgramDeleteDB(pNO);
+            console.log(res);
+            getProgramList(); // 초기화 진행
+            handleReset(); // 등록화면 이동
+        } catch (error) {
+            console.error('삭제 에러:', error);
+        }
+    };
     //입력값 변경
     const handleInputChange = (e, name) => {
         const { value } = e.target;
@@ -82,16 +79,11 @@ const ProgramDetail = ({ handleOutput, componentRef, getProgramList, handleReset
             PG_CONTENT: pNO.PG_CONTENT,
             PG_REPEAT_TYPE: pNO.PG_REPEAT_TYPE
         };
-        const confirmUpdate = window.confirm("수정하시겠습니까?");
-        if(confirmUpdate){
-            //수정하기
-            const res = await ProgramUpdateDB(data);
-            console.log(res);
-            console.log(data);
-            alert("프로그램이 수정되었습니다!!");
-            getProgramList(); // 초기화 진행
-            handleReset(); // 등록화면 이동
-        }
+        //수정하기
+        const res = await ProgramUpdateDB(data);
+        console.log(res);
+        console.log(data);
+        alert("프로그램이 수정되었습니다!!");
         getProgramList(); // 초기화 진행
         handleReset(); // 등록화면 이동
     };

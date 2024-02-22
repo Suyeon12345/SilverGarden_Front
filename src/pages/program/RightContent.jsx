@@ -16,10 +16,14 @@ const RightContent = ({getProgramList}) => {
     });
     
     const handleOutput = () => {
-        const confirmPrint = window.confirm("출력하시겠습니까?");
-        if(confirmPrint){
+        if (programDetail === null || programDetail === undefined) {
+            const confirmOutput = window.confirm('출력값이 비어있습니다. 정말 출력하시겠습니까?');
+            if (confirmOutput) {
+                handlePrint();
+            }
+        } else {
             handlePrint();
-        } 
+        }
     };
     const handleReset = () => {
         console.log('초기화 버튼이 클릭되었습니다.');

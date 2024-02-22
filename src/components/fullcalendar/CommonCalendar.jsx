@@ -26,6 +26,7 @@ const CommonCalendar = ({
   const [selectedEvent, setSelectedEvent] = useState(null);
   //카테고리 관리 -> 모달창에서 카테고리 셀렉트 사용 가능
   const [categories, setCategories] = useState([]);
+
   //기본 초기화 세트
   const updateModalState = () => {
     setIsModalOpen(false);
@@ -44,31 +45,25 @@ const CommonCalendar = ({
         no: event[columnNames.no],
         color: event[columnNames.color],
         content: event[columnNames.content],
-        category: event[columnNames.category],//여기의 카테고리값으로 모달에 전달하고 싶은건데
+        category: event[columnNames.category],
         // 추가 필드들도 필요에 따라 변환
       }));
       setEvents(formattedEvents);
       // 카테고리 값 추출 및 상태로 관리
       const uniqueCategories = Array.from(
         new Set(formattedEvents.map((event) => event.category))
-        );
-        setCategories(uniqueCategories);
-        console.log(categories);      
-      } catch (error) {
-        // 에러 처리
-      }
-    };
-    //최초 한 번 이벤트 조회해서 띄우기
-    useEffect(() => {
-      fetchEvents();
-    }, []);
-  
-  useEffect(() => {
-    // events 상태가 변화할 때마다 실행
-    if (typeof handleEvents === 'function') {
-      handleEvents(events);
+      );
+      setCategories(uniqueCategories);
+    } catch (error) {
+      // 에러 처리
     }
-  }, [events]); 
+    //handleEvents(events)
+  };
+  //최초 한 번 이벤트 조회해서 띄우기
+  useEffect(() => {
+    fetchEvents();
+    //handleEvents(events)
+  }, []);
 
   //모달 핸들링
   const handleModalAction = (action, event) => {
@@ -145,17 +140,12 @@ const CommonCalendar = ({
   // FullCalendar 옵션 설정
   const calendarOptions = {
     height: 600,
-    eventTimeFormat: { 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      hour12: false 
-    },
     selectable: true,
     selectMirror: true,
     selectInfo: true,
     initialView: "dayGridMonth",
     locale: "ko",
-    expandRows: true, //드`래`그로 확장
+    expandRows: true, //드래그로 확장
     timezone: "local",
     editable: true,
     dayMaxEvents: true,
@@ -163,7 +153,7 @@ const CommonCalendar = ({
     dayMaxEventRows: true, // for all non-TimeGrid views
     views: {
       timeGrid: {
-        dayMaxEventRows: 40, // adjust to 6 only for timeGridWeek/timeGridDay
+        dayMaxEventRows: 6, // adjust to 6 only for timeGridWeek/timeGridDay
       },
     },
     headerToolbar: {
