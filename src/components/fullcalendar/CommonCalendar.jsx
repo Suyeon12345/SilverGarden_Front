@@ -55,7 +55,7 @@ const CommonCalendar = ({
         content: eventsData[columnNames.content],
         category: eventsData[columnNames.category],
       }));
-      handleDispatch(formattedEvents); 
+      handleDispatch(formattedEvents);
       const uniqueCategories = [...new Set(formattedEvents.map(event => event.category))];
       setCategories(uniqueCategories);
     } catch (error) {
@@ -65,6 +65,7 @@ const CommonCalendar = ({
 
   useEffect(() => {
     fetchAndDispatch();
+    console.log("모달닫혔음");
   }, [isModalOpen]);
 
   //모달 핸들링
